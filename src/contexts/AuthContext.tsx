@@ -23,8 +23,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const hasHashParams = window.location.hash && window.location.hash.length > 1;
       
       if (hasHashParams) {
-        const { data, error } = await supabase.auth.getSessionFromUrl();
+        // Usando o método correto para obter sessão da URL
+        const { data, error } = await supabase.auth.getSession();
+        
         if (!error && data.session) {
+          // Se temos uma sessão válida, removemos os parâmetros de hash e navegamos para home
           window.location.replace('/');
         }
       }
