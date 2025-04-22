@@ -52,6 +52,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Custom theme colors
+				linkbloom: {
+					primary: '#D9F4C7',
+					yellow: '#F8FA90',
+					yellow2: '#F4EF88',
+					taupe: '#AC9969',
+					mint: '#9DCDC0',
+					text: '#111111',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

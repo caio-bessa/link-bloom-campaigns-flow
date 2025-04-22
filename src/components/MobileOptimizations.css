@@ -1,0 +1,37 @@
+
+/* Mobile optimizations for LinkBloom app */
+@media (max-width: 768px) {
+  /* Increase touch targets for mobile */
+  button, 
+  .card button,
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: 44px;
+  }
+  
+  /* Improve readability on small screens */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Stack grid items on mobile */
+  .grid {
+    gap: 1rem !important;
+  }
+  
+  /* Adjust card spacing */
+  .card {
+    padding: 1rem !important;
+  }
+  
+  /* Full width form fields */
+  input, 
+  textarea, 
+  select {
+    width: 100% !important;
+  }
+}
