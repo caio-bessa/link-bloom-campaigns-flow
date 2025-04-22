@@ -10,6 +10,7 @@ import { toast } from "sonner";
 export function AuthForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +32,9 @@ export function AuthForm() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            emailRedirectTo: window.location.origin
+          }
         });
         if (error) throw error;
         toast.success("Cadastro realizado com sucesso! Verifique seu email.");
@@ -39,6 +43,23 @@ export function AuthForm() {
       toast.error(error.message);
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function handleGoogleSignIn() {
+    setIsLoginLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin
+        }
+      });
+      if (error) throw error;
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoginLoading(false);
     }
   }
 
@@ -75,6 +96,27 @@ export function AuthForm() {
               required
             />
           </div>
+          
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Ou continue com
+              </span>
+            </div>
+          </div>
+          
+          <Button 
+            type="button" 
+            variant="outline" 
+            className="w-full"
+            disabled={isLoginLoading}
+            onClick={handleGoogleSignIn}
+          >
+            {isLoginLoading ? "Carregando..." : "Google"}
+          </Button>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button

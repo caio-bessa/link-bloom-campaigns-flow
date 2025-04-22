@@ -17,6 +17,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
+  // Capturar o hash da URL se for um redirecionamento de autenticação
+  useEffect(() => {
+    const handleAuthRedirect = async () => {
+      const hasHashParams = window.location.hash && window.location.hash.length > 1;
+      
+      if (hasHashParams) {
+        const { data, error } = await supabase.auth.getSessionFromUrl();
+        if (!error && data.session) {
+          window.location.replace('/');
+        }
+      }
+    };
+    
+    handleAuthRedirect();
+  }, []);
+
   useEffect(() => {
     // Configurar listener para mudanças de autenticação
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
